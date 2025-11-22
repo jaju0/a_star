@@ -18,11 +18,12 @@ private:
     float m_gCost;
     float m_hCost;
     float m_fCost;
-    std::shared_ptr<Node> m_pParent;
+    SharedPtr m_pParent;
 
 public:
     Node();
     Node(uint32_t x, uint32_t y, bool walkable);
+    Node(const Node&) = delete;
 
     bool operator==(const Node& b) const;
 

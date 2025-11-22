@@ -29,6 +29,8 @@ private:
 
 public:
     Grid(uint32_t width, uint32_t height);
+    Grid(const Grid&) = delete;
+    Grid& operator=(const Grid&) = delete;
 
     void resetGrid();
     void setObstacle(uint32_t x, uint32_t y);
