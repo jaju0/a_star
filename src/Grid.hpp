@@ -26,6 +26,8 @@ public:
 private:
     uint32_t m_width;
     uint32_t m_height;
+    Node::SharedPtr m_pStartNode;
+    Node::SharedPtr m_pTargetNode;
     std::vector<Node::SharedPtr> m_nodes;
 
 public:
@@ -34,10 +36,14 @@ public:
     Grid& operator=(const Grid&) = delete;
 
     void resetGrid();
+    void setStartNode(uint32_t x, uint32_t y);
+    void setTargetNode(uint32_t x, uint32_t y);
     void setObstacle(uint32_t x, uint32_t y);
 
     uint32_t getWidth() const;
     uint32_t getHeight() const;
+    Node::SharedPtr getStartNode() const;
+    Node::SharedPtr getTargetNode() const;
     Node::SharedPtr getNode(uint32_t x, uint32_t y) const;
     NeighbourArray getNeighbours(int32_t x, int32_t y) const;
     NeighbourArray getNeighbours(uint32_t x, uint32_t y) const;

@@ -23,6 +23,30 @@ void Grid::resetGrid()
     }
 }
 
+void Grid::setStartNode(uint32_t x, uint32_t y)
+{
+    uint32_t pos = y * m_width + x;
+    if(pos > m_width * m_height)
+    {
+        std::cerr << "tried to make a non existing Node outside the grid the start node at " << "x: " << x << " y: " << y << "!" << std::endl;
+        return;
+    }
+
+    m_pStartNode = m_nodes.at(y * m_width + x);
+}
+
+void Grid::setTargetNode(uint32_t x, uint32_t y)
+{
+    uint32_t pos = y * m_width + x;
+    if(pos > m_width * m_height)
+    {
+        std::cerr << "tried to make a non existing Node outside the grid the target node at " << "x: " << x << " y: " << y << "!" << std::endl;
+        return;
+    }
+
+    m_pTargetNode = m_nodes.at(y * m_width + x);
+}
+
 void Grid::setObstacle(uint32_t x, uint32_t y)
 {
     uint32_t pos = y * m_width + x;
@@ -44,6 +68,16 @@ uint32_t Grid::getWidth() const
 uint32_t Grid::getHeight() const
 {
     return m_height;
+}
+
+Node::SharedPtr Grid::getStartNode() const
+{
+    return m_pStartNode;
+}
+
+Node::SharedPtr Grid::getTargetNode() const
+{
+    return m_pTargetNode;
 }
 
 Node::SharedPtr Grid::getNode(uint32_t x, uint32_t y) const
