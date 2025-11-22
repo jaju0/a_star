@@ -1,0 +1,47 @@
+#ifndef A_STAR_GRID_HPP_
+#define A_STAR_GRID_HPP_
+
+#include <memory>
+#include <vector>
+#include <array>
+
+#include "Node.hpp"
+
+namespace a_star {
+
+class Grid
+{
+public:
+    using NeighbourArray = std::array<Node::SharedPtr, 8>;
+    static constexpr const uint8_t TopLeftNeighbourIndex = 0;
+    static constexpr const uint8_t TopNeighbourIndex = 1;
+    static constexpr const uint8_t TopRightNeighbourIndex = 2;
+    static constexpr const uint8_t RightNeighbourIndex = 3;
+    static constexpr const uint8_t BottomRightNeighbourIndex = 4;
+    static constexpr const uint8_t BottomNeighbourIndex = 5;
+    static constexpr const uint8_t BottomLeftNeighbourIndex = 6;
+    static constexpr const uint8_t LeftNeighbourIndex = 7;
+
+private:
+    uint32_t m_width;
+    uint32_t m_height;
+    std::vector<Node::SharedPtr> m_nodes;
+
+public:
+    Grid(uint32_t width, uint32_t height);
+
+    void resetGrid();
+    void setObstacle(uint32_t x, uint32_t y);
+
+    Node::SharedPtr getNode(uint32_t x, uint32_t y);
+    NeighbourArray getNeighbours(int32_t x, int32_t y);
+    NeighbourArray getNeighbours(uint32_t x, uint32_t y);
+    NeighbourArray getNeighbours(Node::SharedPtr node);
+
+    bool isInGrid(int32_t x, int32_t y) const;
+    bool isInGrid(uint32_t x, uint32_t y) const;
+};
+
+}
+
+#endif
