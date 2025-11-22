@@ -12,6 +12,7 @@ namespace a_star {
 class Grid
 {
 public:
+    using SharedPtr = std::shared_ptr<Grid>;
     using NeighbourArray = std::array<Node::SharedPtr, 8>;
     static constexpr const uint8_t TopLeftNeighbourIndex = 0;
     static constexpr const uint8_t TopNeighbourIndex = 1;
@@ -35,6 +36,8 @@ public:
     void resetGrid();
     void setObstacle(uint32_t x, uint32_t y);
 
+    uint32_t getWidth() const;
+    uint32_t getHeight() const;
     Node::SharedPtr getNode(uint32_t x, uint32_t y) const;
     NeighbourArray getNeighbours(int32_t x, int32_t y) const;
     NeighbourArray getNeighbours(uint32_t x, uint32_t y) const;

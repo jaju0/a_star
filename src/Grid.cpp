@@ -36,6 +36,16 @@ void Grid::setObstacle(uint32_t x, uint32_t y)
     node->setWalkable(false);
 }
 
+uint32_t Grid::getWidth() const
+{
+    return m_width;
+}
+
+uint32_t Grid::getHeight() const
+{
+    return m_height;
+}
+
 Node::SharedPtr Grid::getNode(uint32_t x, uint32_t y) const
 {
     uint32_t pos = y * m_width + x;
