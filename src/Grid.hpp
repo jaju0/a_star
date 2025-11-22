@@ -35,10 +35,10 @@ public:
     void resetGrid();
     void setObstacle(uint32_t x, uint32_t y);
 
-    Node::SharedPtr getNode(uint32_t x, uint32_t y);
-    NeighbourArray getNeighbours(int32_t x, int32_t y);
-    NeighbourArray getNeighbours(uint32_t x, uint32_t y);
-    NeighbourArray getNeighbours(Node::SharedPtr node);
+    Node::SharedPtr getNode(uint32_t x, uint32_t y) const;
+    NeighbourArray getNeighbours(int32_t x, int32_t y) const;
+    NeighbourArray getNeighbours(uint32_t x, uint32_t y) const;
+    NeighbourArray getNeighbours(Node::SharedPtr node) const;
 
     bool isInGrid(int32_t x, int32_t y) const;
     bool isInGrid(uint32_t x, uint32_t y) const;

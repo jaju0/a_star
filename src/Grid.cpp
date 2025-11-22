@@ -36,7 +36,7 @@ void Grid::setObstacle(uint32_t x, uint32_t y)
     node->setWalkable(false);
 }
 
-Node::SharedPtr Grid::getNode(uint32_t x, uint32_t y)
+Node::SharedPtr Grid::getNode(uint32_t x, uint32_t y) const
 {
     uint32_t pos = y * m_width + x;
     if(pos > m_width * m_height)
@@ -48,7 +48,7 @@ Node::SharedPtr Grid::getNode(uint32_t x, uint32_t y)
     return m_nodes.at(pos);
 }
 
-Grid::NeighbourArray Grid::getNeighbours(int32_t x, int32_t y)
+Grid::NeighbourArray Grid::getNeighbours(int32_t x, int32_t y) const
 {
     bool xOutOfBounds = x < 0 || x >= static_cast<int32_t>(m_width);
     bool yOutOfBounds = y < 0 || y >= static_cast<int32_t>(m_height);
@@ -87,12 +87,12 @@ Grid::NeighbourArray Grid::getNeighbours(int32_t x, int32_t y)
     return neighbours;
 }
 
-Grid::NeighbourArray Grid::getNeighbours(uint32_t x, uint32_t y)
+Grid::NeighbourArray Grid::getNeighbours(uint32_t x, uint32_t y) const
 {
     return getNeighbours(static_cast<int32_t>(x), static_cast<int32_t>(y));
 }
 
-Grid::NeighbourArray Grid::getNeighbours(Node::SharedPtr node)
+Grid::NeighbourArray Grid::getNeighbours(Node::SharedPtr node) const
 {
     return getNeighbours(node->getX(), node->getY());
 }
