@@ -57,7 +57,11 @@ void Renderer::render()
             auto& rect = getRect(x, y);
 
             auto node = m_pGrid->getNode(x, y);
-            if(node->isWalkable())
+            if(node->equalCoords(*m_pGrid->getStartNode()))
+                rect.setFillColor(sf::Color::Blue);
+            else if(node->equalCoords(*m_pGrid->getTargetNode()))
+                rect.setFillColor(sf::Color::Magenta);
+            else if(node->isWalkable())
                 rect.setFillColor(sf::Color::White);
             else
                 rect.setFillColor(sf::Color::Black);
