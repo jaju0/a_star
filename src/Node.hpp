@@ -26,6 +26,7 @@ public:
     Node(const Node&) = delete;
 
     bool operator==(const Node& b) const;
+    bool equalCoords(const Node& b) const;
 
     void setWalkable(bool walkable);
 
