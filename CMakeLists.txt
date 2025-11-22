@@ -14,6 +14,7 @@ project(a_star)
 add_executable(${PROJECT_NAME}
     src/main.cpp
     src/ProgramOptions.cpp
+    src/Node.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}
