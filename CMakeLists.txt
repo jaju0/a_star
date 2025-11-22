@@ -16,6 +16,7 @@ add_executable(${PROJECT_NAME}
     src/ProgramOptions.cpp
     src/Node.cpp
     src/Grid.cpp
+    src/Renderer.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}
