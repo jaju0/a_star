@@ -1,4 +1,5 @@
 #include <iostream>
+#include <SFML/Graphics.hpp>
 #include "Grid.hpp"
 
 namespace a_star {
@@ -6,8 +7,40 @@ namespace a_star {
 Grid::Grid(uint32_t width, uint32_t height)
     : m_width(width)
     , m_height(height)
-    , m_nodes(width * height)
+    , m_nodes()
 {
+    m_nodes.reserve(m_width * m_height);
+}
+
+Grid::SharedPtr Grid::loadFromImageFile(const std::string& path)
+{
+    sf::Image img;
+    if(!img.loadFromFile(path))
+    {
+        std::cerr << "grid could not be loaded from image file. The file path was: " << path << std::endl;
+        return nullptr;
+    }
+
+    sf::Vector2u size = img.getSize();
+
+    auto grid = std::make_shared<Grid>(size.x, size.y);
+    for(uint32_t y = 0; y < size.y; ++y)
+    {
+        for(uint32_t x = 0; x < size.x; ++x)
+        {
+            sf::Color pixelColor = img.getPixel(x, y);
+            bool walkable = pixelColor != sf::Color::Black;
+
+            grid->m_nodes.push_back(std::make_shared<Node>(x, y, walkable));
+
+            if(pixelColor == sf::Color::Red)
+                grid->setStartNode(x, y);
+            if(pixelColor == sf::Color::Green)
+                grid->setTargetNode(x, y);
+        }
+    }
+
+    return grid;
 }
 
 void Grid::resetGrid()

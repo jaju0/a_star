@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include <array>
+#include <string>
 
 #include "Node.hpp"
 
@@ -51,6 +52,8 @@ public:
 
     bool isInGrid(int32_t x, int32_t y) const;
     bool isInGrid(uint32_t x, uint32_t y) const;
+
+    static SharedPtr loadFromImageFile(const std::string& path);
 };
 
 }
