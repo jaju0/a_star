@@ -1,8 +1,8 @@
 #include <iostream>
-#include <SFML/Graphics.hpp>
 #include <boost/program_options.hpp>
 
 #include "ProgramOptions.hpp"
+#include "App.hpp"
 
 int main(int argc, char** argv)
 {
@@ -18,21 +18,10 @@ int main(int argc, char** argv)
 
     std::string configFile = varmap.at("config").as<std::string>();
 
+
     a_star::ProgramOptions programOptions(configFile);
-    sf::RenderWindow renderWindow(sf::VideoMode(1280, 720), "A*", sf::Style::Close);
-
-    while(renderWindow.isOpen())
-    {
-        sf::Event ev;
-        while(renderWindow.pollEvent(ev))
-        {
-            if(ev.type == sf::Event::Closed)
-                renderWindow.close();
-        }
-
-        renderWindow.clear(sf::Color::Black);
-        renderWindow.display();
-    }
+    a_star::App app(programOptions);
+    app.start();
 
     return 0;
 }
