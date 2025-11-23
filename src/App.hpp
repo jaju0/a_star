@@ -3,6 +3,7 @@
 
 #include "ProgramOptions.hpp"
 #include "Grid.hpp"
+#include "AStar.hpp"
 #include "Renderer.hpp"
 
 namespace a_star {
@@ -12,6 +13,7 @@ class App
 private:
     ProgramOptions& m_programOptions;
     Grid::SharedPtr m_pGrid;
+    AStar::SharedPtr m_pAStar;
     Renderer::SharedPtr m_pRenderer;
 
     void init();
