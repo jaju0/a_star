@@ -12,17 +12,15 @@ class ProgramOptions
 public:
     ProgramOptions(const std::string& configFile);
 
-    uint32_t getWindowWidth();
-    uint32_t getWindowHeight();
-    bool isFullscreen();
+    const std::string& getPathToGridFile();
+    uint32_t getNodeSize();
 
 private:
     boost::program_options::options_description m_description;
     boost::program_options::variables_map m_varmap;
 
-    uint32_t m_windowWidth;
-    uint32_t m_windowHeight;
-    bool m_fullscreen;
+    std::string m_pathToGridFile;
+    uint32_t m_nodeSize;
 };
 
 }
