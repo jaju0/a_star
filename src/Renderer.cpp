@@ -61,6 +61,12 @@ void Renderer::render()
                 rect.setFillColor(sf::Color::Blue);
             else if(node->equalCoords(*m_pGrid->getTargetNode()))
                 rect.setFillColor(sf::Color::Magenta);
+            else if(node->isPartOfPath())
+                rect.setFillColor(sf::Color(70, 70, 70));
+            else if(node->isClosed())
+                rect.setFillColor(sf::Color::Red);
+            else if(node->isOpen())
+                rect.setFillColor(sf::Color::Green);
             else if(node->isWalkable())
                 rect.setFillColor(sf::Color::White);
             else
