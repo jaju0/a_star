@@ -16,6 +16,9 @@ add_executable(${PROJECT_NAME}
     src/ProgramOptions.cpp
     src/Node.cpp
     src/Grid.cpp
+    src/EuclideanDistance.cpp
+    src/ManhattanDistance.cpp
+    src/AStar.cpp
     src/Renderer.cpp
     src/App.cpp
 )
