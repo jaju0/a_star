@@ -17,14 +17,23 @@ public:
 private:
     Grid::SharedPtr m_pGrid;
     std::shared_ptr<sf::RenderWindow> m_pRenderWindow;
-
-    float m_nodeSize;
     std::vector<sf::RectangleShape> m_rects;
+
+    sf::Color m_obstacleNodeColor;
+    sf::Color m_emptyNodeColor;
+    sf::Color m_startNodeColor;
+    sf::Color m_targetNodeColor;
+    sf::Color m_openNodeColor;
+    sf::Color m_closedNodeColor;
+    sf::Color m_pathNodeColor;
+
+    sf::Color m_outlineColor;
+    uint32_t m_outlineThickness;
 
     sf::RectangleShape& getRect(uint32_t x, uint32_t y);
 
 public:
-    Renderer(Grid::SharedPtr pGrid, float nodeSize);
+    Renderer(Grid::SharedPtr pGrid);
     Renderer(const Renderer&) = delete;
     Renderer& operator=(const Renderer&) = delete;
 

@@ -17,10 +17,9 @@ int main(int argc, char** argv)
     boost::program_options::notify(varmap);
 
     std::string configFile = varmap.at("config").as<std::string>();
+    a_star::ProgramOptions::getInst().loadFromConfigFile(configFile);
 
-
-    a_star::ProgramOptions programOptions(configFile);
-    a_star::App app(programOptions);
+    a_star::App app;
     app.start();
 
     return 0;

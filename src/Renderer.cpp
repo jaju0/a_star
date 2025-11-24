@@ -1,20 +1,43 @@
 #include "Renderer.hpp"
+#include "ProgramOptions.hpp"
 
 namespace a_star {
 
-Renderer::Renderer(Grid::SharedPtr pGrid, float nodeSize)
+Renderer::Renderer(Grid::SharedPtr pGrid)
     : m_pGrid(pGrid)
-    , m_nodeSize(nodeSize)
+    , m_obstacleNodeColor(sf::Color::Black)
+    , m_emptyNodeColor(sf::Color::White)
+    , m_startNodeColor(sf::Color::Magenta)
+    , m_targetNodeColor(sf::Color::Red)
+    , m_openNodeColor(sf::Color::Green)
+    , m_closedNodeColor(sf::Color::Red)
+    , m_pathNodeColor(sf::Color(70, 70, 70))
+    , m_outlineColor(sf::Color::Black)
+    , m_outlineThickness(1)
 {
 }
 
 void Renderer::init()
 {
-    auto uNodeSize = static_cast<uint32_t>(m_nodeSize);
+    auto& programOptions = ProgramOptions::getInst();
+
+    m_obstacleNodeColor = sf::Color(programOptions.getGridObstacleNodeColor());
+    m_emptyNodeColor = sf::Color(programOptions.getGridEmptyNodeColor());
+    m_startNodeColor = sf::Color(programOptions.getGridStartNodeColor());
+    m_targetNodeColor = sf::Color(programOptions.getGridTargetNodeColor());
+    m_openNodeColor = sf::Color(programOptions.getGridOpenNodeColor());
+    m_closedNodeColor = sf::Color(programOptions.getGridClosedNodeColor());
+    m_pathNodeColor = sf::Color(programOptions.getGridPathNodeColor());
+    m_outlineColor = sf::Color(programOptions.getGridOutlineColor());
+    m_outlineThickness = programOptions.getGridOutlineThickness();
+
+    uint32_t nodeSize = programOptions.getNodeSize();
+    float fNodeSize = static_cast<float>(nodeSize);
+    float fOutlineThickness = static_cast<float>(m_outlineThickness);
     uint32_t gridWidth = m_pGrid->getWidth();
     uint32_t gridHeight = m_pGrid->getHeight();
-    uint32_t windowWidth = gridWidth * uNodeSize;
-    uint32_t windowHeight = gridHeight * uNodeSize;
+    uint32_t windowWidth = gridWidth * nodeSize;
+    uint32_t windowHeight = gridHeight * nodeSize;
 
     m_pRenderWindow = std::make_shared<sf::RenderWindow>(sf::VideoMode(windowWidth, windowHeight), "A* Algorithm", sf::Style::Close);
 
@@ -25,11 +48,21 @@ void Renderer::init()
 
         for(uint32_t x = 0; x < m_pGrid->getWidth(); ++x)
         {
-            auto fX = static_cast<float>(x);
-            m_rects.emplace_back(sf::Vector2f(m_nodeSize - 2, m_nodeSize - 2));
-            m_rects.back().setPosition(fX * m_nodeSize + 1, fY * m_nodeSize + 1);
-            m_rects.back().setOutlineColor(sf::Color::Black);
-            m_rects.back().setOutlineThickness(1);
+            float fX = static_cast<float>(x);
+
+            if(fOutlineThickness < fNodeSize / 2)
+            {
+                m_rects.emplace_back(sf::Vector2f(fNodeSize - fOutlineThickness * 2, fNodeSize - fOutlineThickness * 2));
+                m_rects.back().setPosition(fX * fNodeSize + fOutlineThickness, fY * fNodeSize + fOutlineThickness);
+                m_rects.back().setOutlineColor(m_outlineColor);
+                m_rects.back().setOutlineThickness(m_outlineThickness);
+                continue;
+            }
+
+            m_rects.emplace_back(sf::Vector2f(fNodeSize, fNodeSize));
+            m_rects.back().setPosition(fX * fNodeSize, fY * fNodeSize);
+            m_rects.back().setOutlineColor(m_outlineColor);
+            m_rects.back().setOutlineThickness(0);
         }
     }
 }
@@ -58,19 +91,19 @@ void Renderer::render()
 
             auto node = m_pGrid->getNode(x, y);
             if(node->equalCoords(*m_pGrid->getStartNode()))
-                rect.setFillColor(sf::Color::Blue);
+                rect.setFillColor(m_startNodeColor);
             else if(node->equalCoords(*m_pGrid->getTargetNode()))
-                rect.setFillColor(sf::Color::Magenta);
+                rect.setFillColor(m_targetNodeColor);
             else if(node->isPartOfPath())
-                rect.setFillColor(sf::Color(70, 70, 70));
+                rect.setFillColor(m_pathNodeColor);
             else if(node->isClosed())
-                rect.setFillColor(sf::Color::Red);
+                rect.setFillColor(m_closedNodeColor);
             else if(node->isOpen())
-                rect.setFillColor(sf::Color::Green);
+                rect.setFillColor(m_openNodeColor);
             else if(node->isWalkable())
-                rect.setFillColor(sf::Color::White);
+                rect.setFillColor(m_emptyNodeColor);
             else
-                rect.setFillColor(sf::Color::Black);
+                rect.setFillColor(m_obstacleNodeColor);
 
             m_pRenderWindow->draw(rect);
         }

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Grid.hpp"
+#include "ProgramOptions.hpp"
 
 namespace a_star {
 
@@ -14,6 +15,11 @@ Grid::Grid(uint32_t width, uint32_t height)
 
 Grid::SharedPtr Grid::loadFromImageFile(const std::string& path)
 {
+    auto& programOptions = ProgramOptions::getInst();
+    sf::Color obstacleColor = sf::Color(programOptions.getImageObstacleNodeColor());
+    sf::Color startColor = sf::Color(programOptions.getImageStartNodeColor());
+    sf::Color targetColor = sf::Color(programOptions.getImageTargetNodeColor());
+
     sf::Image img;
     if(!img.loadFromFile(path))
     {
@@ -29,13 +35,13 @@ Grid::SharedPtr Grid::loadFromImageFile(const std::string& path)
         for(uint32_t x = 0; x < size.x; ++x)
         {
             sf::Color pixelColor = img.getPixel(x, y);
-            bool walkable = pixelColor != sf::Color::Black;
+            bool walkable = pixelColor != obstacleColor;
 
             grid->m_nodes.push_back(std::make_shared<Node>(x, y, walkable));
 
-            if(pixelColor == sf::Color::Red)
+            if(pixelColor == startColor)
                 grid->setStartNode(x, y);
-            if(pixelColor == sf::Color::Green)
+            if(pixelColor == targetColor)
                 grid->setTargetNode(x, y);
         }
     }
@@ -152,14 +158,18 @@ Grid::NeighbourArray Grid::getNeighbours(int32_t x, int32_t y) const
     };
 
     auto neighbours = NeighbourArray();
-    getNeighbour(posTopLeft, TopLeftNeighbourIndex, neighbours);
     getNeighbour(posTop, TopNeighbourIndex, neighbours);
-    getNeighbour(posTopRight, TopRightNeighbourIndex, neighbours);
     getNeighbour(posRight, RightNeighbourIndex, neighbours);
-    getNeighbour(posBottomRight, BottomRightNeighbourIndex, neighbours);
     getNeighbour(posBottom, BottomNeighbourIndex, neighbours);
-    getNeighbour(posBottomLeft, BottomLeftNeighbourIndex, neighbours);
     getNeighbour(posLeft, LeftNeighbourIndex, neighbours);
+
+    if(ProgramOptions::getInst().diagonalNeighboursUsed())
+    {
+        getNeighbour(posTopLeft, TopLeftNeighbourIndex, neighbours);
+        getNeighbour(posTopRight, TopRightNeighbourIndex, neighbours);
+        getNeighbour(posBottomRight, BottomRightNeighbourIndex, neighbours);
+        getNeighbour(posBottomLeft, BottomLeftNeighbourIndex, neighbours);
+    }
 
     return neighbours;
 }

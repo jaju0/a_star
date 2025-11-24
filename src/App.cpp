@@ -4,8 +4,7 @@
 
 namespace a_star {
 
-App::App(ProgramOptions& programOptions)
-    : m_programOptions(programOptions)
+App::App()
 {
 }
 
@@ -26,11 +25,18 @@ void App::loop()
 
 void App::init()
 {
-    float fNodeSize = static_cast<float>(m_programOptions.getNodeSize());
+    auto& programOptions = ProgramOptions::getInst();
 
-    m_pGrid = Grid::loadFromImageFile(m_programOptions.getPathToGridFile());
-    m_pAStar = std::make_shared<AStar>(m_pGrid, std::make_shared<ManhattanDistance>());
-    m_pRenderer = std::make_shared<Renderer>(m_pGrid, fNodeSize);
+    HeuristicFunction::SharedPtr heuristicFunction;
+
+    if(programOptions.getDistanceFunction() == "manhattan")
+        heuristicFunction = std::make_shared<ManhattanDistance>();
+    else
+        heuristicFunction = std::make_shared<EuclideanDistance>();
+
+    m_pGrid = Grid::loadFromImageFile(ProgramOptions::getInst().getPathToGridFile());
+    m_pAStar = std::make_shared<AStar>(m_pGrid, heuristicFunction);
+    m_pRenderer = std::make_shared<Renderer>(m_pGrid);
 
     m_pAStar->init();
     m_pRenderer->init();

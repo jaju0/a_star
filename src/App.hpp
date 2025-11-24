@@ -11,7 +11,6 @@ namespace a_star {
 class App
 {
 private:
-    ProgramOptions& m_programOptions;
     Grid::SharedPtr m_pGrid;
     AStar::SharedPtr m_pAStar;
     Renderer::SharedPtr m_pRenderer;
@@ -22,7 +21,7 @@ private:
     void loop();
 
 public:
-    App(ProgramOptions& programOptions);
+    App();
     App(const App&) = delete;
     App& operator=(const App&) = delete;
 

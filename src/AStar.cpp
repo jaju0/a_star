@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "AStar.hpp"
+#include "ProgramOptions.hpp"
 
 namespace a_star {
 
@@ -15,6 +16,7 @@ void AStar::init()
 {
     m_openList.clear();
     m_closedList.clear();
+    m_path.clear();
 
     auto startNode = m_pGrid->getStartNode();
     auto targetNode = m_pGrid->getTargetNode();
@@ -30,15 +32,28 @@ void AStar::init()
 
 void AStar::update()
 {
+    int32_t stepTime = static_cast<int32_t>(ProgramOptions::getInst().getStepTime());
+    if(m_clock.getElapsedTime().asMilliseconds() < stepTime)
+        return;
+
     auto targetNode = m_pGrid->getTargetNode();
 
     bool foundPath = m_pCurrentNode->equalCoords(*targetNode);
     bool isFinished = foundPath || !m_openList.size();
 
-    if(foundPath && !m_isPathReconstructed)
+    if(foundPath)
     {
-        reconstructPath();
-        return;
+        if(!m_isPathReconstructed)
+        {
+            reconstructPath();
+            return;
+        }
+
+        if(m_path.size() > 0)
+        {
+            m_path.front()->isPartOfPath(true);
+            m_path.pop_front();
+        }
     }
 
     if(isFinished)
@@ -78,6 +93,8 @@ void AStar::update()
         neighbour->setHCost(hCost);
         neighbour->setFCost(neighbour->getGCost() + neighbour->getHCost());
     }
+
+    m_clock.restart();
 }
 
 void AStar::moveNodeToOpenList(Node::SharedPtr node)
@@ -98,7 +115,9 @@ void AStar::moveNodeToClosedList(Node::SharedPtr node)
 void AStar::reconstructPath()
 {
     for(auto node = m_pCurrentNode; node != nullptr; node = node->getParent())
-        node->isPartOfPath(true);
+    {
+        m_path.push_front(node);
+    }
 
     m_isPathReconstructed = true;
 }

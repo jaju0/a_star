@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <list>
+#include <SFML/System.hpp>
 
 #include "HeuristicFunction.hpp"
 #include "Node.hpp"
@@ -20,6 +21,8 @@ private:
     HeuristicFunction::SharedPtr m_pHeuristicFunction;
     std::list<Node::SharedPtr> m_openList;
     std::list<Node::SharedPtr> m_closedList;
+    std::list<Node::SharedPtr> m_path;
+    sf::Clock m_clock;
 
     Node::SharedPtr m_pCurrentNode;
     bool m_isPathReconstructed;
