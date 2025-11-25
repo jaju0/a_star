@@ -7,6 +7,7 @@
 
 #include "Grid.hpp"
 #include "Keyboard.hpp"
+#include "Mouse.hpp"
 
 namespace a_star {
 
@@ -39,7 +40,7 @@ public:
     Renderer& operator=(const Renderer&) = delete;
 
     void init();
-    void update(Keyboard& keyboard);
+    void update(Keyboard& keyboard, Mouse& mouse);
     void render();
     void close();
 

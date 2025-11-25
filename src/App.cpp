@@ -44,7 +44,9 @@ void App::init()
 
 void App::update()
 {
-    m_pRenderer->update(m_keyboard);
+    m_keyboard.update();
+    m_mouse.update();
+    m_pRenderer->update(m_keyboard, m_mouse);
 
     if(m_keyboard.isKeyReleased(Keyboard::Q))
         m_pRenderer->close();

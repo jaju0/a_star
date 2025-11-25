@@ -21,6 +21,7 @@ add_executable(${PROJECT_NAME}
     src/AStar.cpp
     src/Renderer.cpp
     src/Keyboard.cpp
+    src/Mouse.cpp
     src/App.cpp
 )
 

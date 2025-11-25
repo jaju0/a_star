@@ -6,6 +6,7 @@
 #include "AStar.hpp"
 #include "Renderer.hpp"
 #include "Keyboard.hpp"
+#include "Mouse.hpp"
 
 namespace a_star {
 
@@ -16,6 +17,7 @@ private:
     AStar::SharedPtr m_pAStar;
     Renderer::SharedPtr m_pRenderer;
     Keyboard m_keyboard;
+    Mouse m_mouse;
 
     void init();
     void update();

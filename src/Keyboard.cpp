@@ -11,8 +11,6 @@ Keyboard::Keyboard()
 
 void Keyboard::handleEvents(sf::Event& ev)
 {
-    m_keyStatesLastFrame = m_keyStates;
-
     if(ev.type == sf::Event::KeyPressed)
     {
         switch(ev.key.code)
@@ -37,7 +35,11 @@ void Keyboard::handleEvents(sf::Event& ev)
             break;
         }
     }
+}
 
+void Keyboard::update()
+{
+    m_keyStatesLastFrame = m_keyStates;
 }
 
 void Keyboard::keyPressed(Keyboard::Keys key)

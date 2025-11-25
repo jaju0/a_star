@@ -67,7 +67,7 @@ void Renderer::init()
     }
 }
 
-void Renderer::update(Keyboard& keyboard)
+void Renderer::update(Keyboard& keyboard, Mouse& mouse)
 {
     sf::Event ev;
     while(m_pRenderWindow->pollEvent(ev))
@@ -76,6 +76,7 @@ void Renderer::update(Keyboard& keyboard)
             m_pRenderWindow->close();
         
         keyboard.handleEvents(ev);
+        mouse.handleEvents(ev);
     }
 }
 

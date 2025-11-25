@@ -29,6 +29,7 @@ public:
     Keyboard();
 
     void handleEvents(sf::Event& ev);
+    void update();
     bool isKeyPressed(Keys key);
     bool isKeyReleased(Keys key);
 };
