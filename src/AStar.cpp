@@ -8,6 +8,7 @@ AStar::AStar(Grid::SharedPtr pGrid, HeuristicFunction::SharedPtr pHeuristicFunct
     : m_pGrid(pGrid)
     , m_pHeuristicFunction(pHeuristicFunction)
     , m_isPathReconstructed(false)
+    , m_isStopped(false)
 {
 }
 
@@ -30,8 +31,41 @@ void AStar::init()
     m_pCurrentNode = startNode;
 }
 
+void AStar::reset()
+{
+    for(uint32_t y = 0; y < m_pGrid->getHeight(); ++y)
+    {
+        for(uint32_t x = 0; x < m_pGrid->getWidth(); ++x)
+        {
+            auto node = m_pGrid->getNode(x, y);
+            node->isOpen(false);
+            node->isClosed(false);
+            node->setGCost(0);
+            node->setHCost(0);
+            node->setFCost(0);
+            node->setParent(nullptr);
+            node->isPartOfPath(false);
+        }
+    }
+
+    init();
+}
+
+void AStar::stop()
+{
+    m_isStopped = true;
+}
+
+void AStar::resume()
+{
+    m_isStopped = false;
+}
+
 void AStar::update()
 {
+    if(m_isStopped)
+        return;
+
     int32_t stepTime = static_cast<int32_t>(ProgramOptions::getInst().getStepTime());
     if(m_clock.getElapsedTime().asMilliseconds() < stepTime)
         return;

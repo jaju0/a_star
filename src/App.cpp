@@ -45,6 +45,16 @@ void App::init()
 void App::update()
 {
     m_pRenderer->update(m_keyboard);
+
+    if(m_keyboard.isKeyReleased(Keyboard::Q))
+        m_pRenderer->close();
+    if(m_keyboard.isKeyReleased(Keyboard::SPACE))
+        m_pAStar->reset();
+    if(m_keyboard.isKeyReleased(Keyboard::S))
+        m_pAStar->stop();
+    if(m_keyboard.isKeyReleased(Keyboard::R))
+        m_pAStar->resume();
+
     m_pAStar->update();
 }
 

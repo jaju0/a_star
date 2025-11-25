@@ -114,6 +114,12 @@ void Renderer::render()
     m_pRenderWindow->display();
 }
 
+void Renderer::close()
+{
+    if(m_pRenderWindow)
+        m_pRenderWindow->close();
+}
+
 bool Renderer::isOpen() const
 {
     if(m_pRenderWindow)

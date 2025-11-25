@@ -41,6 +41,7 @@ public:
     void init();
     void update(Keyboard& keyboard);
     void render();
+    void close();
 
     bool isOpen() const;
 };

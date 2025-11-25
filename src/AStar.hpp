@@ -26,6 +26,7 @@ private:
 
     Node::SharedPtr m_pCurrentNode;
     bool m_isPathReconstructed;
+    bool m_isStopped;
 
     void moveNodeToOpenList(Node::SharedPtr node);
     void moveNodeToClosedList(Node::SharedPtr node);
@@ -35,6 +36,9 @@ public:
     AStar(Grid::SharedPtr pGrid, HeuristicFunction::SharedPtr pHeuristicFunction);
 
     void init();
+    void reset();
+    void stop();
+    void resume();
     void update();
 };
 
