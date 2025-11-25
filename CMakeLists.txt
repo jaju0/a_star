@@ -20,6 +20,7 @@ add_executable(${PROJECT_NAME}
     src/ManhattanDistance.cpp
     src/AStar.cpp
     src/Renderer.cpp
+    src/Keyboard.cpp
     src/App.cpp
 )
 
