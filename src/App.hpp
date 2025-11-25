@@ -5,6 +5,7 @@
 #include "Grid.hpp"
 #include "AStar.hpp"
 #include "Renderer.hpp"
+#include "Keyboard.hpp"
 
 namespace a_star {
 
@@ -14,6 +15,7 @@ private:
     Grid::SharedPtr m_pGrid;
     AStar::SharedPtr m_pAStar;
     Renderer::SharedPtr m_pRenderer;
+    Keyboard m_keyboard;
 
     void init();
     void update();

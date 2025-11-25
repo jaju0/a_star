@@ -44,7 +44,7 @@ void App::init()
 
 void App::update()
 {
-    m_pRenderer->update();
+    m_pRenderer->update(m_keyboard);
     m_pAStar->update();
 }
 

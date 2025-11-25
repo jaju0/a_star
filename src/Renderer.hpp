@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Grid.hpp"
+#include "Keyboard.hpp"
 
 namespace a_star {
 
@@ -38,7 +39,7 @@ public:
     Renderer& operator=(const Renderer&) = delete;
 
     void init();
-    void update();
+    void update(Keyboard& keyboard);
     void render();
 
     bool isOpen() const;

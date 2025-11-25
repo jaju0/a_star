@@ -67,13 +67,15 @@ void Renderer::init()
     }
 }
 
-void Renderer::update()
+void Renderer::update(Keyboard& keyboard)
 {
     sf::Event ev;
     while(m_pRenderWindow->pollEvent(ev))
     {
         if(ev.type == sf::Event::Closed)
             m_pRenderWindow->close();
+        
+        keyboard.handleEvents(ev);
     }
 }
 
