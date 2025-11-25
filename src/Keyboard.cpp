@@ -19,6 +19,9 @@ void Keyboard::handleEvents(sf::Event& ev)
         case sf::Keyboard::Q: keyPressed(Keyboard::Q); break;
         case sf::Keyboard::R: keyPressed(Keyboard::R); break;
         case sf::Keyboard::S: keyPressed(Keyboard::S); break;
+        case sf::Keyboard::Y: keyPressed(Keyboard::Y); break;
+        case sf::Keyboard::X: keyPressed(Keyboard::X); break;
+        case sf::Keyboard::C: keyPressed(Keyboard::C); break;
         default:
             break;
         }
@@ -31,6 +34,9 @@ void Keyboard::handleEvents(sf::Event& ev)
         case sf::Keyboard::Q: keyReleased(Keyboard::Q); break;
         case sf::Keyboard::R: keyReleased(Keyboard::R); break;
         case sf::Keyboard::S: keyReleased(Keyboard::S); break;
+        case sf::Keyboard::Y: keyReleased(Keyboard::Y); break;
+        case sf::Keyboard::X: keyReleased(Keyboard::X); break;
+        case sf::Keyboard::C: keyReleased(Keyboard::C); break;
         default:
             break;
         }

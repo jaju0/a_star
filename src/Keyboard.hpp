@@ -15,6 +15,9 @@ public:
         Q,
         R,
         S,
+        Y,
+        X,
+        C,
         NUM_KEYS
     };
 
